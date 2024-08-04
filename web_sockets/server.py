@@ -1,59 +1,51 @@
 import asyncio
-import websockets
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import threading
+import websockets
 
 
 def sort_data_graph():
     file_path = "/home/ewald/Desktop/PycharmProjects/server_client/web_sockets/received_file.txt"
     integers_list = []
 
+    # Read and process the file
     with open(file_path, "r") as file:
         for line in file:
             integer = int(line.strip())
             integers_list.append(integer)
 
-    numbers = integers_list
-    sorted_data = numbers.sort()
+    # Sort data
+    sorted_data = sorted(integers_list)
 
-    print(integers_list)
-
-    x = list(range(1, len(sorted_data) + 1))
-    y = sorted_data
-
-    plt.bar(x, y, label="BAR")
-    plt.xlabel("Index")
-    plt.ylabel("Value")
-    plt.title("sorted_data_graph")
-    plt.legend()
+    # Create a new figure for the sorted data
+    fig1, ax1 = plt.subplots()
+    ax1.bar(range(1, len(sorted_data) + 1), sorted_data, label="Sorted Data")
+    ax1.set_xlabel("Index")
+    ax1.set_ylabel("Value")
+    ax1.set_title("Sorted Data Graph")
+    ax1.legend()
     plt.show()
-    asyncio.sleep(5)
-    plt.close(all)
 
 def graph():
     file_path = "/home/ewald/Desktop/PycharmProjects/server_client/web_sockets/received_file.txt"
     integers_list = []
 
+    # Read and process the file
     with open(file_path, "r") as file:
         for line in file:
             integer = int(line.strip())
             integers_list.append(integer)
 
-    print(integers_list)
-
-    x = list(range(1, len(integers_list) + 1))
-    y = integers_list
-
-    plt.bar(x, y, label="BAR")
-    plt.xlabel("Index")
-    plt.ylabel("Value")
-    plt.title("data_graph")
-    plt.legend()
+    # Create a new figure for the unsorted data
+    fig2, ax2 = plt.subplots()
+    ax2.bar(range(1, len(integers_list) + 1), integers_list, label="Data")
+    ax2.set_xlabel("Index")
+    ax2.set_ylabel("Value")
+    ax2.set_title("Data Graph")
+    ax2.legend()
     plt.show()
-    asyncio.sleep(5)
-    plt.close(all)
 
 async def receive_file(websocket, path):
     with open("received_file.txt", 'wb') as file:
@@ -63,7 +55,9 @@ async def receive_file(websocket, path):
                 break
             file.write(data)
     threading.Thread(target=graph()).start()
-    #threading.Thread(target=sort_data_graph()).start()
+    threading.Thread(target=sort_data_graph()).start()
+
+plt.close('all')
 
 start_server = websockets.serve(receive_file, "localhost", 8765)
 
@@ -73,4 +67,3 @@ async def main():
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
-

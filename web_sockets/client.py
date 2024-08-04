@@ -11,7 +11,7 @@ def generate_data():
         lists = (numbers1, numbers2, numbers3)
         amount = 0
         maxi = 20
-        with open("/home/ewald/Desktop/PycharmProjects/server_client/web_socket/stuff.txt", 'w') as file:
+        with open("/home/ewald/Desktop/PycharmProjects/server_client/web_sockets/stuff.txt", 'w') as file:
             while amount < maxi:
                 amount += 1
                 random_lists = rnd.choice(lists)
