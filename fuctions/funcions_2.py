@@ -1,10 +1,7 @@
-import asyncio
-import websockets
 import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-import threading
-
+import asyncio
 
 def graph():
     file_path = "/home/ewald/Desktop/PycharmProjects/server_client/web_sockets/received_file.txt"
@@ -26,25 +23,6 @@ def graph():
     plt.title("Graph Test")
     plt.legend()
     plt.show()
-    asyncio.sleep(2)
+    asyncio.sleep(5)
     plt.close(all)
-
-
-async def receive_file(websocket, path):
-    with open("received_file.txt", 'wb') as file:
-        while True:
-            data = await websocket.recv()
-            if data == "EOF":
-                break
-            file.write(data)
-    threading.Thread(target=graph).start()
-
-start_server = websockets.serve(receive_file, "localhost", 8765)
-
-async def main():
-    async with start_server:
-        await asyncio.Future()
-
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
 
