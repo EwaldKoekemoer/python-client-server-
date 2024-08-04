@@ -11,7 +11,7 @@ def generate_data():
         lists = (numbers1, numbers2, numbers3)
         amount = 0
         maxi = 20
-        with open("/home/ewald/Desktop/PycharmProjects/server_client/stuff.txt", 'w') as file:
+        with open("/home/ewald/Desktop/PycharmProjects/server_client/web_socket/stuff.txt", 'w') as file:
             while amount < maxi:
                 amount += 1
                 random_lists = rnd.choice(lists)
@@ -21,7 +21,7 @@ def generate_data():
 
 async def send_file():
     async with websockets.connect("ws://localhost:8765") as websocket:
-        with open("/home/ewald/Desktop/PycharmProjects/server_client/stuff.txt", 'rb') as file:
+        with open("/home/ewald/Desktop/PycharmProjects/server_client/web_sockets/stuff.txt", 'rb') as file:
             while True:
                 chunk = file.read(1024)
                 if not chunk:
