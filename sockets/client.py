@@ -18,5 +18,6 @@ def send(msg):
     client.send(send_length)
     client.send(message)
 
-send(input("send: "))
+data = ("stuff")
+send(data)
 send(DISCONNECT_MSG)
