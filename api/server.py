@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify
+from fastapi import FastAPI
 
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route("/")
-def home():
-    return "home"
-
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.get('/')
+async def root():
+    return {
+        "num1": 1,
+        "num2": 2,
+        "num3": 3
+    }
